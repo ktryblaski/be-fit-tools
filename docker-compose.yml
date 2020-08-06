@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:${POSTGRES_VERSION}
+    environment:
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    networks:
+      - bf_network
+
+  api:
+    image: be-fit-api:${BE_FIT_VERSION}
+    depends_on:
+      - db
+    links:
+      - "db"
+    networks:
+      - bf_network
+
+  webapp:
+    image: be-fit-webapp:${BE_FIT_VERSION}
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+    links:
+      - "api"
+    networks:
+      - bf_network
+
+networks:
+  bf_network:

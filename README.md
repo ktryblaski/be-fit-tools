@@ -1,4 +1,4 @@
-# socico tools
+# be-fit tools
 A set of tools which helps in deploying **be-fit** apps.
 
 ## Usage

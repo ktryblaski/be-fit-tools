@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  befit-db:
+    image: postgres:${POSTGRES_VERSION}
+    environment:
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - befit-pg-data:/var/lib/postgresql/data
+    networks:
+      - befit-network
+
+  befit-api:
+    image: befit-api
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+      - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+    depends_on:
+      - befit-db
+    links:
+      - befit-db
+    networks:
+      - befit-network
+
+  befit-webapp:
+    image: befit-webapp
+    ports:
+      - "80:80"
+    depends_on:
+      - befit-api
+    links:
+      - befit-api
+    networks:
+      - befit-network
+
+volumes:
+  befit-pg-data:
+
+networks:
+  befit-network:

@@ -13,7 +13,7 @@ BEFIT_VERSION=${BEFIT_VERSION:-$(befit_version)}
 
 info "---> Building API image <---"
 docker build  -t befit-api:${BEFIT_VERSION} \
-              -f ${BEFIT_API}/docker/remote/Dockerfile \
-              ${BEFIT_API}
+              -f $(api_path)/docker/remote/Dockerfile \
+              $(api_path)
 
 docker tag befit-api:${BEFIT_VERSION} befit-api

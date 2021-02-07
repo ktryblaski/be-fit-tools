@@ -10,11 +10,9 @@ check_env_variables
 check_repos_changes
 
 info "---> Pulling API <---"
-cd ${BEFIT_API}
-git checkout master
-git pull
+git -C $(api_path) checkout master
+git -C $(api_path) pull
 
 info "---> Pulling WEBAPP <---"
-cd ${BEFIT_WEBAPP}
-git checkout master
-git pull
+git -C $(webapp_path) checkout master
+git -C $(webapp_path) pull

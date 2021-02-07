@@ -7,9 +7,7 @@ DIR=$( dirname $0 )
 . ${DIR}/../utils/utils.sh
 . ${DIR}/../config
 
-check_befit_env_variables
-
-export POSTGRES_VERSION
+check_env_variables
 
 info "---> Checking .env file <---"
 if [[ ! -f ${DIR}/../.env ]]; then

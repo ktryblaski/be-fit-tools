@@ -2,85 +2,77 @@
 
 set -e
 
-check_befit_env_variables() {
-  if [[ -z ${BEFIT_API} ]]; then
-    error "BEFIT_API environment variable is not set"
-  fi
-
-  if [[ -z ${BEFIT_WEBAPP} ]]; then
-    error "BEFIT_WEBAPP environment variable is not set"
-  fi
-
-  if [[ (-z ${BEFIT_API}) || (-z ${BEFIT_WEBAPP}) ]]; then
-    exit 1
-  fi
+befit_version() {
+  echo $(date +"%Y%m%d__%H%M%S")
 }
 
-check_befit_api_variable() {
-  if [[ -z ${BEFIT_API} ]]; then
-    error "BEFIT_API environment variable is not set"
-    exit 1
-  fi
-}
+check_env_variables() {
+  err=false
 
-check_befit_webapp_variable() {
-  if [[ -z ${BEFIT_WEBAPP} ]]; then
-    error "BEFIT_WEBAPP environment variable is not set"
-    exit 1
-  fi
-}
+  for env in \
+    BEFIT_API \
+    BEFIT_WEBAPP
+  do
+    if [[ -z ${!env} ]]; then
+      error "${env} environment variable is not set"
+      err=true
+    fi
+  done
 
-check_repos_have_no_changes() {
-  check_befit_env_variables
-
-  start_pwd=$(pwd)
-  should_exit_1=false
-
-  cd ${BEFIT_API}
-  if [[ `git status --porcelain` ]]; then
-    error "API repository has uncommitted changes"
-    should_exit_1=true
-  fi
-
-  cd ${BEFIT_WEBAPP}
-  if [[ `git status --porcelain` ]]; then
-    error "WEBAPP repository has uncommitted changes"
-    should_exit_1=true
-  fi
-
-  cd ${start_pwd}
-
-  if [[ ${should_exit_1} == true ]]; then
+  if [[ ${err} == true ]]; then
    exit 1
   fi
 }
 
-println() {
-  printf "${1}\n"
+check_repos_changes() {
+  check_env_variables
+
+  err=false
+
+  for repo in \
+    BEFIT_API \
+    BEFIT_WEBAPP
+  do
+    if [[ `git -C ${!repo} status --porcelain` ]]; then
+      error "${repo} repository has uncommitted changes"
+      err=true
+    fi
+  done
+
+  if [[ ${err} == true ]]; then
+   exit 1
+  fi
 }
 
 success() {
   green=$'\e[1;32m'
-  end=$'\e[0m'
+  message=$1
 
-  println "${green}${1}${end}"
+  println_colorful ${green} "${message}"
 }
 
 info() {
   yellow=$'\e[1;33m'
-  end=$'\e[0m'
+  message=$1
 
-  println "${yellow}${1}${end}"
+  println_colorful ${yellow} "${message}"
 }
-
 
 error() {
   red=$'\e[1;31m'
-  end=$'\e[0m'
+  message=$1
 
-  println "${red}${1}${end}"
+  println_colorful ${red} "${message}"
 }
 
-befit_version() {
-    echo $(date +"%Y%m%d__%H%M%S")
+println_colorful() {
+  color=$1
+  message=$2
+  default=$'\e[0m'
+
+  println "${color}${message}${default}"
+}
+
+println() {
+  printf "${1}\n"
 }

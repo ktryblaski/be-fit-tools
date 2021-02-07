@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   befit-db:
-    image: postgres:${POSTGRES_VERSION}
+    image: postgres:13.1-alpine
     environment:
       - POSTGRES_USER=${DB_USERNAME}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
@@ -28,7 +28,7 @@ services:
   befit-webapp:
     image: befit-webapp
     ports:
-      - "80:80"
+      - 80:80
     depends_on:
       - befit-api
     links:

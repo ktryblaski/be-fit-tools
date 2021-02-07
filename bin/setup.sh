@@ -7,10 +7,9 @@ DIR=$( dirname $0 )
 . ${DIR}/../utils/utils.sh
 . ${DIR}/../config
 
-check_befit_env_variables
+check_env_variables
 
 BEFIT_VERSION=$(befit_version)
-export POSTGRES_VERSION
 
 ${DIR}/build-api.sh
 ${DIR}/build-webapp.sh

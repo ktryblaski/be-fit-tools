@@ -6,8 +6,8 @@ DIR=$( dirname $0 )
 
 . ${DIR}/../utils/utils.sh
 
-check_befit_env_variables
-check_repos_have_no_changes
+check_env_variables
+check_repos_changes
 
 info "---> Pulling API <---"
 cd ${BEFIT_API}

@@ -7,6 +7,7 @@ DIR=$( dirname $0 )
 . ${DIR}/../utils/utils.sh
 . ${DIR}/../config
 
+check_env_file
 check_env_variables
 
 BEFIT_VERSION=${BEFIT_VERSION:-$(befit_version)}

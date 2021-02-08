@@ -9,12 +9,12 @@ DIR=$( dirname $0 )
 
 check_env_variables
 
+${DIR}/build-webapp.sh
+
 info "---> Stopping old WEBAPP container <---"
 docker-compose -f ${DIR}/../docker/docker-compose.yml \
 	           -p ${COMPOSE_PREFIX} \
 	           rm -f -s \
                befit-webapp
-
-${DIR}/build-webapp.sh
 
 ${DIR}/start.sh

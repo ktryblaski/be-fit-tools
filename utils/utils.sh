@@ -2,6 +2,15 @@
 
 set -e
 
+DIR=$( dirname $0 )
+
+check_env_file() {
+  info "---> Checking .env file <---"
+  if [[ ! -f ${DIR}/../.env ]]; then
+    cp ${DIR}/../.env-example ${DIR}/../.env
+  fi
+}
+
 befit_version() {
   echo $(date +"%Y%m%d__%H%M%S")
 }

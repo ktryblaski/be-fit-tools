@@ -28,7 +28,7 @@ services:
   befit-webapp:
     image: befit-webapp
     ports:
-      - 80:80
+      - ${WEBAPP_PORT}:80
     depends_on:
       - befit-api
     links:

@@ -14,7 +14,6 @@ api_path() {
     return 0
   fi
 
-  DIR=$( dirname $0 )
   if [[ -d "${DIR}/../../be-fit-api" ]]; then
     echo "${DIR}/../../be-fit-api"
     return 0
@@ -30,7 +29,6 @@ webapp_path() {
     return 0
   fi
 
-  DIR=$( dirname $0 )
   if [[ -d "${DIR}/../../be-fit-webapp" ]]; then
     echo "${DIR}/../../be-fit-webapp"
     return 0

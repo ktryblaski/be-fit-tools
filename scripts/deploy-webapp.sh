@@ -9,12 +9,12 @@ DIR=$( dirname $0 )
 
 check_env_variables
 
-${DIR}/build-api.sh
+${DIR}/build-webapp.sh
 
-info "---> Stopping old API container <---"
+info "---> Stopping existing be-fit-webapp container <---"
 docker-compose -f ${DIR}/../docker/docker-compose.yml \
 	           -p ${COMPOSE_PREFIX} \
 	           rm -f -s \
-               befit-api
+               befit-webapp
 
 ${DIR}/start.sh

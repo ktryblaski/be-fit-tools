@@ -9,10 +9,10 @@ DIR=$( dirname $0 )
 check_env_variables
 check_repos_changes
 
-info "---> Pulling API <---"
+info "---> Pulling be-fit-api <---"
 git -C $(api_path) checkout master
 git -C $(api_path) pull origin master
 
-info "---> Pulling WEBAPP <---"
+info "---> Pulling be-fit-webapp <---"
 git -C $(webapp_path) checkout master
 git -C $(webapp_path) pull origin master
